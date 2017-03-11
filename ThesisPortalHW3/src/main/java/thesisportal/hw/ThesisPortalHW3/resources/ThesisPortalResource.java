@@ -38,7 +38,7 @@ public class ThesisPortalResource {
     @Timed
     @Produces(MediaType.APPLICATION_JSON)
     public String empty(){
-    	return "Available endpoints:\n getById/{id} \n getByTitle/{title} \n getAll/ \n createTopic/{title}&&{description}";
+    	return "Available endpoints:\n getById/{id} \n getByTitle/{title} \n getAll/ \n \n createTopic/{title}&&{description} \n \n deleteById/{id} \n \n changeTopicById/{id}&&{title}&&{description}";
     }
 	
 	//get content by ID
@@ -73,11 +73,7 @@ public class ThesisPortalResource {
     
     
 		
-	
-    
-	
-    
-    
+	//create a new topic
     @GET
     @Timed
     @Path("createTopic/{title}&&{description}")
@@ -88,8 +84,30 @@ public class ThesisPortalResource {
     	Topic createdTopic = new Topic(title, description);
     	topicDAO.createTopic(createdTopic);
     	return createdTopic;
-    	//return new Topic(title, description);
     }
-   
+    
+    //delete topic by id
+    @GET
+    @Timed
+    @Path("deleteById/{id}")
+    @UnitOfWork
+    @ExceptionMetered
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteById(@PathParam("id") int id){
+    	topicDAO.deleteById(id);
+	}
+
+    
+    //change topic
+    @GET
+    @Timed
+    @Path("changeTopicById/{id}&&{title}&&{description}")
+    @UnitOfWork
+    @ExceptionMetered
+    @Produces(MediaType.APPLICATION_JSON)
+    public void changeTopic(@PathParam("id") int id, @PathParam("title") String title, @PathParam("description") String description){
+    	topicDAO.updateById(id, title, description);
+    	System.out.println(id+" "+title+" "+description);
+    }
 	 
 }
