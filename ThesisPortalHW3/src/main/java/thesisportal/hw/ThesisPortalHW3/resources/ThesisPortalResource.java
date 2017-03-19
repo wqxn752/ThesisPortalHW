@@ -61,7 +61,7 @@ public class ThesisPortalResource {
 		return existingTopicList;
     }
     
-    //get allcontent
+    //get all content
     @GET
     @Timed
     @Path("getAll/")

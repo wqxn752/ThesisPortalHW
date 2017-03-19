@@ -122,10 +122,7 @@ public class Topic {
                 Objects.equals(this.created, that.created);
     }
 
-	/*@Override
-	public String toString(){
-		return ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
-	}*/
+	
 	
 	
     

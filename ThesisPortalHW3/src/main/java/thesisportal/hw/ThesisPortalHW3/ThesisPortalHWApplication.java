@@ -2,7 +2,6 @@ package thesisportal.hw.ThesisPortalHW3;
 
 
 
-import org.hibernate.cfg.Configuration;
 import org.skife.jdbi.v2.DBI;
 
 import io.dropwizard.Application;
@@ -24,8 +23,6 @@ import io.dropwizard.jdbi.*;
 public class ThesisPortalHWApplication extends Application<ThesisPortalHWConfiguration> {
 
     public static void main(final String[] args) throws Exception {
-    	Configuration conf = new Configuration().configure();
-    	
     	new ThesisPortalHWApplication().run(args);
     }
     
