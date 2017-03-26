@@ -19,8 +19,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
-@Path("/thesis-portal")
+@Path("/topics")
 @Produces(MediaType.APPLICATION_JSON)
 public class ThesisPortalResource {
 
@@ -43,8 +45,13 @@ public class ThesisPortalResource {
 	@Timed
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Topic getById(@PathParam("id") int id) {
-		return topicDAO.getById(id);
+	public Response getById(@PathParam("id") int id) {
+		// return topicDAO.getById(id);
+		if (topicDAO.getById(id) == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("Topic with id "+id+" not found").build();
+		} else {
+			return Response.ok(topicDAO.getById(id)).build();
+		}
 	}
 
 	/*
@@ -77,10 +84,11 @@ public class ThesisPortalResource {
 	@UnitOfWork
 	@ExceptionMetered
 	@Produces(MediaType.APPLICATION_JSON)
-	public Topic createTopic(@PathParam("title") String title, @PathParam("description") String description) {
+	public Response createTopic(@PathParam("title") String title, @PathParam("description") String description) {
 		Topic createdTopic = new Topic(title, description);
 		topicDAO.createTopic(createdTopic);
-		return createdTopic;
+		return Response.created(UriBuilder.fromResource(ThesisPortalResource.class).build(createdTopic.getID()))
+				.entity(createdTopic).build();
 	}
 
 	// delete topic by id
